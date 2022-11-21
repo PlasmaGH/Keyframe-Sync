@@ -1,0 +1,66 @@
+-- Created by Plasma
+-- ^ WeAreInnovative
+
+local SelectionService = game:GetService("Selection");
+local ChangeHistoryService = game:GetService("ChangeHistoryService")
+
+local function AddMarkers()
+	
+	local Animation_1_Sequences = {};
+
+	local FrameSelections = SelectionService:Get()
+
+	-- print(FrameSelections)
+
+	local Animation_1:KeyframeSequence = FrameSelections[1]
+	local Animation_2:KeyframeSequence = FrameSelections[2]
+
+	if not Animation_1 or not Animation_1:IsA("KeyframeSequence") then print('stawp') return; end
+	if not Animation_2 or not Animation_2:IsA("KeyframeSequence") then print('stawp 2') return; end
+
+	print("Running now, validate")
+
+	for index, keyframe in Animation_1:GetChildren() do
+
+		for index, marker : KeyframeMarker in keyframe:GetChildren() do
+
+			if marker:IsA("KeyframeMarker") then
+
+				if Animation_1_Sequences[keyframe.Time] == nil then
+					Animation_1_Sequences[keyframe.Time] = {};
+				end
+
+				table.insert(
+					Animation_1_Sequences[keyframe.Time],
+					marker:Clone()
+				);
+
+			end
+
+		end
+
+	end
+
+	if Animation_1_Sequences ~= {} then
+		ChangeHistoryService:SetWaypoint("NewKeyframe")
+	end
+
+	for index, keyframe in Animation_2:GetChildren() do
+
+		local InstanceMarkers = Animation_1_Sequences[keyframe.Time];
+
+		if InstanceMarkers then
+			for index, marker in InstanceMarkers do
+				print("Replicate Marker To: ", tostring(keyframe:GetFullName()))
+				marker.Parent = keyframe
+			end
+		end
+
+	end
+	
+end
+
+local NewToolbar = plugin:CreateToolbar("Keyframe Sync")
+local KeyframeButton = NewToolbar:CreateButton("Copy Keyframes", "Copy Keyframes From Selection", "rbxassetid://11627457629")
+
+KeyframeButton.Click:Connect(NewToolbar)
