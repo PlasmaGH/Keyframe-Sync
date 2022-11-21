@@ -9,16 +9,12 @@ local function AddMarkers()
 	local Animation_1_Sequences = {};
 
 	local FrameSelections = SelectionService:Get()
-
-	-- print(FrameSelections)
-
+	
 	local Animation_1:KeyframeSequence = FrameSelections[1]
 	local Animation_2:KeyframeSequence = FrameSelections[2]
 
-	if not Animation_1 or not Animation_1:IsA("KeyframeSequence") then print('stawp') return; end
-	if not Animation_2 or not Animation_2:IsA("KeyframeSequence") then print('stawp 2') return; end
-
-	print("Running now, validate")
+	if not Animation_1 or not Animation_1:IsA("KeyframeSequence") then return; end
+	if not Animation_2 or not Animation_2:IsA("KeyframeSequence") then return; end
 
 	for index, keyframe in Animation_1:GetChildren() do
 
@@ -61,6 +57,8 @@ local function AddMarkers()
 end
 
 local NewToolbar = plugin:CreateToolbar("Keyframe Sync")
-local KeyframeButton = NewToolbar:CreateButton("Copy Keyframes", "Copy Keyframes From Selection", "rbxassetid://11627457629")
+local KeyframeButton = NewToolbar:CreateButton("Copy Keyframes", "Copy Keyframes From Selection", "rbxassetid://11627457543")
 
-KeyframeButton.Click:Connect(NewToolbar)
+KeyframeButton.Click:Connect(function()
+	AddMarkers()
+end)
