@@ -4,12 +4,18 @@
 local SelectionService = game:GetService("Selection");
 local ChangeHistoryService = game:GetService("ChangeHistoryService")
 
+local tag = "Animation Event Sync - "
+
+local print = function(...) print(tag, ...) end
+local warn = function(...) print(tag, ...) end
+local error = function(...) print(tag, ...) end
+
 local function AddMarkers()
-	
+
 	local Animation_1_Sequences = {};
 
 	local FrameSelections = SelectionService:Get()
-	
+
 	local Animation_1:KeyframeSequence = FrameSelections[1]
 	local Animation_2:KeyframeSequence = FrameSelections[2]
 
@@ -53,12 +59,40 @@ local function AddMarkers()
 		end
 
 	end
+
+end
+
+local function clearMarker()
+	
+	local FrameSelections = SelectionService:Get()
+	local Animation_1:KeyframeSequence = FrameSelections[1]
+	
+	for index, object in pairs(FrameSelections) do
+		
+		if object and object:IsA("KeyframeSequence") then
+			
+			for index, marker:KeyframeMarker in object:GetDescendants() do
+				if marker:IsA("KeyframeMarker") then
+					print(([[Destorying Keymarker "%s", value: "%s"]]):format(marker.Name, marker.Value))
+					marker:Destroy()
+				end
+			end
+			
+		end
+		
+	end
 	
 end
 
 local NewToolbar = plugin:CreateToolbar("Keyframe Sync")
-local KeyframeButton = NewToolbar:CreateButton("Copy Keyframes", "Copy Keyframes From Selection", "rbxassetid://11627457543")
+
+local KeyframeButton = NewToolbar:CreateButton("Copy Keyframes", "Copy Keyframes From Selection", "rbxassetid://11644321048")
+local KeyframeWipeButton = NewToolbar:CreateButton("Destory Keyframes", "Delete selecte", "rbxassetid://11644321836")
 
 KeyframeButton.Click:Connect(function()
 	AddMarkers()
+end)
+
+KeyframeWipeButton.Click:Connect(function()
+	clearMarker()
 end)
