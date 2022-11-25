@@ -87,7 +87,7 @@ end
 local NewToolbar = plugin:CreateToolbar("Keyframe Sync")
 
 local KeyframeButton = NewToolbar:CreateButton("Copy Keyframes", "Copy Keyframes From Selection", "rbxassetid://11644321048")
-local KeyframeWipeButton = NewToolbar:CreateButton("Destory Keyframes", "Delete selecte", "rbxassetid://11644321836")
+local KeyframeWipeButton = NewToolbar:CreateButton("Destory Keyframes", "Delete selected", "rbxassetid://11644321836")
 
 KeyframeButton.Click:Connect(function()
 	AddMarkers()
