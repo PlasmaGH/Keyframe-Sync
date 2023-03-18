@@ -5,3 +5,9 @@
 A simple plugin that syncs animation events from different animations
 
 Roblox Plugin Link: https://www.roblox.com/library/11627530526/Animation-Event-Sync
+
+---
+
+## Useage:
+
+Select the first Keyframe Sequence object which has the animation event data. Then select the new Keyframe Sequence you want to copy the data to. Next press the "Copy Keyframes" button located in the plugin task bar.
